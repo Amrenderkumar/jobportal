@@ -20,7 +20,7 @@ const port =process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: "https://your-frontend.vercel.app",
+  origin: "https://jobportal-f6py629fx-amrenderkumars-projects.vercel.app/",
   credentials: true
 }));
 
