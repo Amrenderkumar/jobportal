@@ -23,7 +23,7 @@ app.use(cors({
   origin: true,
   credentials: true
 }));
-
+app.set('trust proxy', 1); // Trust the first proxy (if behind a reverse proxy)
 app.use(cookieParser());
 //Database connection code
 const connectDB = async () => {
