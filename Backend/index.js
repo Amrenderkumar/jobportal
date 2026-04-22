@@ -19,11 +19,11 @@ const port =process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.set('trust proxy', 1); // Trust the first proxy (if behind a reverse proxy)
 app.use(cors({
-  origin: true,
+  origin: "https://jobportal-nine-inky.vercel.app",
   credentials: true
 }));
-app.set('trust proxy', 1); // Trust the first proxy (if behind a reverse proxy)
 app.use(cookieParser());
 //Database connection code
 const connectDB = async () => {
