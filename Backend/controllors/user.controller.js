@@ -32,7 +32,7 @@ export const register = async (req, res) => {
             phoneNumber,
             password: hashedPassword,
             role,
-            profile:{
+            profile: {
                 profileImage: cloudResponse.secure_url,
             }
         });
@@ -106,12 +106,20 @@ export const login = async (req, res) => {
         };
 
 
-        return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: "lax" }).json({
-            message: `Welcome back! ${user.fullname}`,
-            token,
-            user: safeuser,
-            success: true
-        });
+        return res
+            .status(200)
+            .cookie("token", token, {
+                maxAge: 1 * 24 * 60 * 60 * 1000,
+                httpOnly: true,
+                secure: true,
+                sameSite: "None"
+            })
+            .json({
+                message: `Welcome back! ${user.fullname}`,
+                token,
+                user: safeuser,
+                success: true
+            });
     } catch (error) {
         console.error("Error during user login:", error);
         res.status(500).json({
@@ -175,17 +183,17 @@ export const updateProfile = async (req, res) => {
             user.skills = skillsArray;
         }
         if (file) {
-      const fileUri = getDataUri(file);
-      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-      user.profile.resume = cloudResponse.secure_url;
-      user.profile.resumeOriginalName = file.originalname;
-    }
+            const fileUri = getDataUri(file);
+            const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+            user.profile.resume = cloudResponse.secure_url;
+            user.profile.resumeOriginalName = file.originalname;
+        }
 
-       
+
 
         await user.save();
 
- const updateUser = {
+        const updateUser = {
             id: user._id,
             fullname: user.fullname,
             email: user.email,
