@@ -16,7 +16,7 @@ const useGetAllAdminJobs = () => {
       setError(null);
       try {
         const res = await axios.get(
-          `${JOB_API_ENDPOINT}/getadminjobs${searchedQuery}`,
+          `${JOB_API_ENDPOINT}/getadminjobs${searchedQuery || ""}`,
           {
             withCredentials: true,
           }
@@ -37,7 +37,7 @@ const useGetAllAdminJobs = () => {
     };
 
     fetchAllAdminJobs();
-  }, [dispatch]);
+  }, [dispatch, searchedQuery]);
 
   return { loading, error };
 };
